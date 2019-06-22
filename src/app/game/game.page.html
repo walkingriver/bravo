@@ -1,0 +1,79 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Bravo!</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card  *ngIf="!hide" (swipe)="onSwipe($event)">
+    <div [ngClass]="card.class+'-bg'"></div>
+    <ion-card-header>
+      <ion-card-subtitle>
+        {{card.title}}
+      </ion-card-subtitle>
+      <ion-card-title>
+        {{card.text}}
+      </ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div class="item-text-wrap item text-center">
+        <p>{{rule}} "{{card.text}}"</p>
+      </div>
+    </ion-card-content>
+    <ion-grid>
+
+      <ion-row>
+        <ion-col size="4" offset="8">
+          <ion-button size="small" fill="clear" (click)="getNextCard()">Draw Card</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-card>
+
+  <ion-fab  *ngIf="!hide" vertical="bottom" horizontal="start" slot="fixed">
+    <ion-fab-button [color]="timerColor()">
+     <span>
+        {{timeRemaining}} 
+     </span> 
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button [disabled]="hide" (click)="getNextCard()" color="light">
+      <ion-icon  name="return-right"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>
+<ion-footer>
+  <ion-toolbar color="dark">
+    <ion-grid>
+
+      <ion-row>
+        <ion-col size="2">
+          <ion-button expand="block" fill="clear" class="blue-bg score" (click)="addScore(0)">{{score[0]}}</ion-button>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button expand="block" fill="clear" class="red-bg score" (click)="addScore(1)">{{score[1]}}</ion-button>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button expand="block" fill="clear" class="green-bg score" (click)="addScore(2)">{{score[2]}}</ion-button>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button expand="block" fill="clear" class="yellow-bg score" (click)="addScore(3)">{{score[3]}}
+          </ion-button>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button expand="block" fill="clear" class="pink-bg score" (click)="addScore(4)">{{score[4]}}</ion-button>
+        </ion-col>
+        <ion-col size="2">
+          <ion-button expand="block" fill="clear" class="brown-bg score" (click)="addScore(5)">{{score[5]}}</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </ion-toolbar>
+</ion-footer>
