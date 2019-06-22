@@ -3,6 +3,7 @@ import { GameStorageService } from '../game-storage.service';
 import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { interval, Subscription, Subject, timer } from 'rxjs';
 import { take, map, takeWhile, switchMap, tap, filter } from 'rxjs/operators';
+import { GameCard } from '../game-card';
 
 @Component({
   selector: 'app-game',
@@ -10,8 +11,8 @@ import { take, map, takeWhile, switchMap, tap, filter } from 'rxjs/operators';
   styleUrls: ['./game.page.scss'],
 })
 export class GamePage implements OnInit, OnDestroy {
-  card = { class: '', rule: '', text: '', title: '' };
-  score = [0, 0, 0, 0, 0, 0];
+  card: GameCard = { class: '', rule: '', text: '', title: '' };
+  score: number[] = [0, 0, 0, 0, 0, 0];
   rule = '';
   allCards = {};
   timerMax = 60;
@@ -26,7 +27,7 @@ export class GamePage implements OnInit, OnDestroy {
     private route: ActivatedRoute
   ) { }
 
-  ngOnInit() {
+  async ngOnInit() {
     console.log({ route: this.route.snapshot });
     this.resetCards();
 
@@ -34,20 +35,24 @@ export class GamePage implements OnInit, OnDestroy {
       tap({ next: () => { this.hide = true; this.timeRemaining = this.timerMax + 1; } }),
       switchMap(() => timer(250, 1000)),
       tap({ next: () => { this.hide = false; this.timeRemaining--; } }),
-      filter( () => this.timeRemaining < 0)
+      filter(() => this.timeRemaining < 0)
     ).subscribe({ next: () => this.getNextCard() });
 
+    const data = await this.gameStorage.loadGame();
+    this.score = data.score;
     this.getNextCard();
   }
 
-  ngOnDestroy(): void {
+  async ngOnDestroy() {
+    await this.gameStorage.saveGame({ score: this.score, card: this.card, timeRemaining: this.timeRemaining });
     this.sub.unsubscribe();
   }
 
   addScore(team) {
     this.score[team]++;
-    // this.gameStorage.saveGame(this.score);
     this.timeRemaining += 15;
+    if (this.timeRemaining > 999) {this.timeRemaining = 999;}
+    this.gameStorage.saveGame({score: this.score, card: this.card, timeRemaining: this.timeRemaining});
   }
 
   resetCards() {
@@ -99,6 +104,7 @@ export class GamePage implements OnInit, OnDestroy {
     // this.showBanner();
     this.cardDrawn$.next();
   };
+  
   randomList(obj) {
     var keys = Object.keys(obj)
     return obj[keys[keys.length * Math.random() << 0]];

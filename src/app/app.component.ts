@@ -12,8 +12,13 @@ import { GameStorageService } from './game-storage.service';
 export class AppComponent {
   public appPages = [
     {
+      title: 'Play Game',
+      url: '/game',
+      icon: 'mic'
+    },
+    {
       title: 'Instructions',
-      url: '/instructions',
+      url: '/',
       icon: 'paper'
     }
   ];
@@ -25,7 +30,7 @@ export class AppComponent {
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
-  
+
   ) {
     this.initializeApp();
   }
@@ -36,6 +41,7 @@ export class AppComponent {
       this.splashScreen.hide();
     });
   }
+
   async newGame() {
     const alert = await this.alertCtrl.create({
       header: 'Start a new game?',
@@ -50,12 +56,13 @@ export class AppComponent {
         },
         {
           text: 'New Game',
-          handler: () => {
-              this.nav.navigateRoot ('/game/new');
+          handler: async () => {
+            await this.gameStorage.newGame();
+            // this.nav.navigateRoot('/game');
           }
         }
       ]
     });
-    return await alert.present();  }
-
+    return await alert.present();
+  }
 }

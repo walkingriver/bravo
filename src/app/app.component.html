@@ -8,10 +8,6 @@
       </ion-header>
       <ion-content padding>
         <ion-list>
-          <ion-menu-toggle auto-hide="true">
-            <ion-item (click)="newGame()"> <ion-icon slot="start" name="mic" ></ion-icon>
-            <ion-label>New Game</ion-label></ion-item>
-          </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
@@ -20,7 +16,11 @@
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
-        </ion-list>
+          <ion-menu-toggle auto-hide="true">
+              <ion-item (click)="newGame()"> <ion-icon slot="start" name="refresh" ></ion-icon>
+              <ion-label>Reset Game</ion-label></ion-item>
+            </ion-menu-toggle>
+          </ion-list>
       </ion-content>
     </ion-menu>
     <ion-router-outlet main></ion-router-outlet>

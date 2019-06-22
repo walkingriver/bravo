@@ -1,31 +1,31 @@
 import { Injectable } from '@angular/core';
-
+import { Storage } from '@ionic/storage';
+import { GameData } from './game-data';
 @Injectable({
   providedIn: 'root'
 })
 export class GameStorageService {
+  constructor(private storage: Storage) {
+    console.log('Hello GameStorageProvider Provider');
+  }
 
+  saveGame(gameData: GameData): Promise<GameData> {
+    return this.storage.set('bravoGame', gameData);
+  }
 
-  // constructor(private storage: Storage) {
-  //   console.log('Hello GameStorageProvider Provider');
-  // }
+  async loadGame(): Promise<GameData> {
+    let data = await this.storage.get('bravoGame') ;
+    return data || emptyData;
+  }
 
-  // saveGame(gameData): Promise<any> {
-  //   return this.storage.set('bravoGame', gameData);
-  // }
+  async newGame(): Promise<any> {
+    await this.saveGame(emptyData);
+    return this.loadGame();
+  }
 
-  // async loadGame(): Promise<any> {
-  //   let score = await this.storage.get('bravoGame');
-  //   if (!score) {
-  //     score = [0, 0, 0, 0, 0, 0];
-  //   }
+}
 
-  //   return score;
-  // }
-
-  // async newGame(): Promise<any> {
-  //   await this.saveGame([0, 0, 0, 0, 0, 0]);
-  //   return this.loadGame();
-  // }
-
+const emptyData: GameData = {
+  score: [0, 0, 0, 0, 0, 0],
+  card: { class: '', rule: '', text: '', title: '' }
 }
