@@ -1,44 +1,33 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="dark">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>
-      Home
-    </ion-title>
+    <ion-title>Bravo!</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-    <ion-card class="welcome-card">
-      <ion-img src="/assets/shapes.svg"></ion-img>
-      <ion-card-header>
-        <ion-card-subtitle>Get Started</ion-card-subtitle>
-        <ion-card-title>Welcome to Ionic</ion-card-title>
-      </ion-card-header>
-      <ion-card-content>
-        <p>Now that your app has been created, you'll want to start building out features and components. Check out some of the resources below for next steps.</p>
-      </ion-card-content>
-    </ion-card>
-    <ion-list lines="none">
-      <ion-list-header>
-        <ion-label>Resources</ion-label>
-      </ion-list-header>
-      <ion-item href="https://ionicframework.com/docs/">
-        <ion-icon slot="start" color="medium" name="book"></ion-icon>
-        <ion-label>Ionic Documentation</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/building/scaffolding">
-        <ion-icon slot="start" color="medium" name="build"></ion-icon>
-        <ion-label>Scaffold Out Your App</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/layout/structure">
-        <ion-icon slot="start" color="medium" name="grid"></ion-icon>
-        <ion-label>Change Your App Layout</ion-label>
-      </ion-item>
-      <ion-item href="https://ionicframework.com/docs/theming/basics">
-        <ion-icon slot="start" color="medium" name="color-fill"></ion-icon>
-        <ion-label>Theme Your App</ion-label>
-      </ion-item>
-    </ion-list>
+<ion-content padding>
+  <ion-card class="card">
+    <div class="song-bg">&nbsp;</div>
+    <ion-card-header class="item item-header item-text-wrap">
+      <ion-card-title>Welcome to Bravo!</ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="item item-body">
+      <p>This is an 'on-the-go' party game for those long waits in theme park lines or long road trips.</p>
+      <p>This is a card game for you and small group of friends. When you start, you will be given a word or a category.
+        Each
+        player or team must come up with and sing the lyrics of a song containing that word or pertaining to that
+        category.
+        Players or teams will take turns singing their songs, leaving the first to fail to come up with a song to lose
+        the
+        point. The word is changed and play continues.</p>
+      <p>If you play it in public, you may just find people around you making their own song suggestions.</p>
+    </ion-card-content>
+    <ion-item class="item">
+      <ion-button (click)="playGame()" expand="block">Game On!
+        <ion-icon slot="end" name="arrow-forward"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-card>
 </ion-content>

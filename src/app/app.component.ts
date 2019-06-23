@@ -12,21 +12,23 @@ import { GameStorageService } from './game-storage.service';
 export class AppComponent {
   public appPages = [
     {
+      title: 'Home',
+      url: '/',
+      icon: 'home'
+    },
+    {
       title: 'Play Game',
       url: '/game',
       icon: 'mic'
     },
     {
       title: 'Instructions',
-      url: '/',
+      url: '/instructions',
       icon: 'paper'
     }
   ];
 
   constructor(
-    private alertCtrl: AlertController,
-    private gameStorage: GameStorageService,
-    private nav: NavController,
     private platform: Platform,
     private splashScreen: SplashScreen,
     private statusBar: StatusBar
@@ -40,29 +42,5 @@ export class AppComponent {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });
-  }
-
-  async newGame() {
-    const alert = await this.alertCtrl.create({
-      header: 'Start a new game?',
-      message: 'Reset the scores and start a brand new game?',
-      buttons: [
-        {
-          text: 'Nevermind',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'New Game',
-          handler: async () => {
-            await this.gameStorage.newGame();
-            // this.nav.navigateRoot('/game');
-          }
-        }
-      ]
-    });
-    return await alert.present();
   }
 }

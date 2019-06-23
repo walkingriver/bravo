@@ -14,15 +14,24 @@ export class GameStorageService {
   }
 
   async loadGame(): Promise<GameData> {
-    let data = await this.storage.get('bravoGame') ;
-    return data || emptyData;
+    try {
+      let data = await this.storage.get('bravoGame');
+      return data || emptyData;
+    } catch (e) {
+      console.error(e);
+      return emptyData;
+    }
   }
 
   async newGame(): Promise<any> {
-    await this.saveGame(emptyData);
-    return this.loadGame();
+    try {
+      await this.saveGame(emptyData);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      return this.loadGame();
+    }
   }
-
 }
 
 const emptyData: GameData = {

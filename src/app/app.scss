@@ -124,28 +124,28 @@
   }
 }
 
-.movie-bg {
+.bg {
+  background-position-y: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 20vh;
+  width: 100%;
+}
+
+.movie {
   background-image: url('../assets/images/movie.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 20vh;
-  width: 100%;
 }
 
-.song-bg {
+.song {
   background-image: url('../assets/images/music.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 20vh;
-  width: 100%;
 }
 
-.book-bg {
+.book {
   background-image: url('../assets/images/book.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 20vh;
-  width: 100%;
+}
+
+.concert {
+  background-image: url('../assets/images/concert.jpg');
 }
 
 .bar-dark h2.score, .bar-dark h2.score:hover {

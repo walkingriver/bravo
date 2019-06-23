@@ -4,6 +4,7 @@ import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
 import { interval, Subscription, Subject, timer } from 'rxjs';
 import { take, map, takeWhile, switchMap, tap, filter } from 'rxjs/operators';
 import { GameCard } from '../game-card';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-game',
@@ -23,8 +24,10 @@ export class GamePage implements OnInit, OnDestroy {
 
   private cardDrawn$ = new Subject();
 
-  constructor(private gameStorage: GameStorageService,
-    private route: ActivatedRoute
+  constructor(
+    private route: ActivatedRoute,
+    private alertCtrl: AlertController,
+    private gameStorage: GameStorageService,
   ) { }
 
   async ngOnInit() {
@@ -51,8 +54,8 @@ export class GamePage implements OnInit, OnDestroy {
   addScore(team) {
     this.score[team]++;
     this.timeRemaining += 15;
-    if (this.timeRemaining > 999) {this.timeRemaining = 999;}
-    this.gameStorage.saveGame({score: this.score, card: this.card, timeRemaining: this.timeRemaining});
+    if (this.timeRemaining > 999) { this.timeRemaining = 999; }
+    this.gameStorage.saveGame({ score: this.score, card: this.card, timeRemaining: this.timeRemaining });
   }
 
   resetCards() {
@@ -81,6 +84,32 @@ export class GamePage implements OnInit, OnDestroy {
     }
   }
 
+
+  async newGame() {
+    const alert = await this.alertCtrl.create({
+      header: 'Start a new game?',
+      message: 'Reset the scores and start a brand new game?',
+      buttons: [
+        {
+          text: 'Nevermind',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'New Game',
+          handler: async () => {
+            const data = await this.gameStorage.newGame(); // calls and returns loadGame 
+            this.score = data.score;
+            this.getNextCard();
+          }
+        }
+      ]
+    });
+    return await alert.present();
+  }
+
   getNextCard() {
     var list = this.randomList(this.allCards);
     var text = list.words[list.index++];
@@ -104,7 +133,7 @@ export class GamePage implements OnInit, OnDestroy {
     // this.showBanner();
     this.cardDrawn$.next();
   };
-  
+
   randomList(obj) {
     var keys = Object.keys(obj)
     return obj[keys[keys.length * Math.random() << 0]];
