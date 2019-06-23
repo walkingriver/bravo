@@ -4,4 +4,5 @@ export interface GameData {
   score: number[];
   card: GameCard;
   timeRemaining?: number;
+  hasSeenInstructions?: boolean
 }

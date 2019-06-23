@@ -13,32 +13,11 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card *ngIf="!hide" (swipe)="onSwipe($event)">
-    <div [ngClass]="card.class" class="bg"></div>
-    <ion-card-header>
-      <ion-card-subtitle>
-        {{card.title}}
-      </ion-card-subtitle>
-      <ion-card-title>
-        {{card.text}}
-      </ion-card-title>
-    </ion-card-header>
-
-    <ion-card-content>
-      <div class="item-text-wrap item text-center">
-        <p>{{rule}} "{{card.text}}"</p>
-      </div>
-    </ion-card-content>
-    <ion-grid>
-
-      <ion-toolbar>
-        <ion-buttons slot="end">
-          <ion-button size="small" fill="clear" (click)="getNextCard()">Draw Card</ion-button>
-        </ion-buttons>
-      </ion-toolbar>
-
-    </ion-grid>
-  </ion-card>
+  <ion-slides #slides pager="false">
+    <ion-slide>
+      <app-game-card [hide]="hide" [card]="card" [rule]="rule"></app-game-card>
+    </ion-slide>
+  </ion-slides>
 
   <ion-fab *ngIf="!hide" vertical="bottom" horizontal="start" slot="fixed">
     <ion-fab-button [color]="timerColor()">

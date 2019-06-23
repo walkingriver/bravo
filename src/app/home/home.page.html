@@ -8,26 +8,27 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-card class="card">
-    <div class="song-bg">&nbsp;</div>
+  <ion-card>
+    <div class="concert bg"></div>
     <ion-card-header class="item item-header item-text-wrap">
       <ion-card-title>Welcome to Bravo!</ion-card-title>
     </ion-card-header>
     <ion-card-content class="item item-body">
       <p>This is an 'on-the-go' party game for those long waits in theme park lines or long road trips.</p>
-      <p>This is a card game for you and small group of friends. When you start, you will be given a word or a category.
-        Each
-        player or team must come up with and sing the lyrics of a song containing that word or pertaining to that
-        category.
-        Players or teams will take turns singing their songs, leaving the first to fail to come up with a song to lose
-        the
-        point. The word is changed and play continues.</p>
-      <p>If you play it in public, you may just find people around you making their own song suggestions.</p>
+      <p>This is a card game for you and small group of friends. When you start, you will be given a word or a
+        category
+        and one of the following subject areas: Song Lyrics , Song Title , Movie Quote , Movie Title , TV Show Quote
+        , TV Show Title , or Book Title</p>
+      <p>If you play it in public, you may just find people around you offering their own song suggestions.</p>
     </ion-card-content>
-    <ion-item class="item">
-      <ion-button (click)="playGame()" expand="block">Game On!
-        <ion-icon slot="end" name="arrow-forward"></ion-icon>
-      </ion-button>
-    </ion-item>
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        <ion-button routerDirection="root" routerLink="/game">
+          Game On!
+          <ion-icon slot="end" name="arrow-forward"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+    
   </ion-card>
 </ion-content>

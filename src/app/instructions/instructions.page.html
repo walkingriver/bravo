@@ -8,7 +8,7 @@
 </ion-header>
 
 <ion-content no-bounce padding>
-  <ion-slides pager="true" (ionSlideDidChange)="onSlideChange($event)">
+  <ion-slides #slider pager="true" (ionSlideDidChange)="onSlideChange($event)">
     <ion-slide>
       <ion-card>
         <div class="concert bg"></div>

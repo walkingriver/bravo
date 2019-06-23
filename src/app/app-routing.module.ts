@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { InstructionGuard } from './instruction.guard';
 
 const routes: Routes = [
   {
@@ -9,14 +10,18 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: './home/home.module#HomePageModule'
+    loadChildren: './home/home.module#HomePageModule',
+    canActivate: [InstructionGuard],
   },
   {
-    path: 'list',
-    loadChildren: './list/list.module#ListPageModule'
+    path: 'game',
+    canActivate: [InstructionGuard],
+    loadChildren: './game/game.module#GamePageModule'
   },
-  { path: 'game', loadChildren: './game/game.module#GamePageModule' },
-  { path: 'instructions', loadChildren: './instructions/instructions.module#InstructionsPageModule' },
+  {
+    path: 'instructions',
+    loadChildren: './instructions/instructions.module#InstructionsPageModule'
+  },
 ];
 
 @NgModule({
@@ -25,4 +30,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

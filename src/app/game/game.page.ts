@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { GameStorageService } from '../game-storage.service';
-import { ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
-import { interval, Subscription, Subject, timer } from 'rxjs';
-import { take, map, takeWhile, switchMap, tap, filter } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription, Subject, timer } from 'rxjs';
+import { switchMap, tap, filter } from 'rxjs/operators';
 import { GameCard } from '../game-card';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonSlides } from '@ionic/angular';
 
 @Component({
   selector: 'app-game',
@@ -12,6 +12,8 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./game.page.scss'],
 })
 export class GamePage implements OnInit, OnDestroy {
+  @ViewChild('slides') slides: IonSlides;
+
   card: GameCard = { class: '', rule: '', text: '', title: '' };
   score: number[] = [0, 0, 0, 0, 0, 0];
   rule = '';
@@ -33,6 +35,7 @@ export class GamePage implements OnInit, OnDestroy {
   async ngOnInit() {
     console.log({ route: this.route.snapshot });
     this.resetCards();
+    await this.slides.lockSwipeToPrev(true);
 
     this.sub = this.cardDrawn$.pipe(
       tap({ next: () => { this.hide = true; this.timeRemaining = this.timerMax + 1; } }),
@@ -139,13 +142,20 @@ export class GamePage implements OnInit, OnDestroy {
     return obj[keys[keys.length * Math.random() << 0]];
   }
 
-  adjectives = ['Poor', 'Mid', 'Tender', 'East/West', 'Late/Later', 'Lost', 'Strong', 'Great', 'Happy', 'Short', 'Young', 'Deep', 'Much', 'Blue', 'Yellow', 'Very', 'Small', 'High', 'Only', 'Cool', 'Cruel', 'Some', 'More', 'Crying', 'One', 'Pretty', 'Funny', 'Tall', 'Next', 'Above', 'Black', 'Purple',];
-  nouns = ['Funk', 'Circle', 'Ocean', 'Afternoon', 'Summer', 'Music', 'Wine', 'War', 'Heaven', 'Mr/Mrs', 'Land', 'Piano', 'Heart', 'Papa/Daddy', 'Moon', 'Dream', 'Train', 'Shop', 'Door', 'Good-Bye', 'Thank You', 'Soul', 'Window', 'Moon', 'Saturday', 'Room', 'Radio', 'Skin', 'Don\'t', 'Mama/Mommy', 'Job', 'God', 'Fire', 'Son', 'Fool', 'Things', 'Christmas', 'Girl', 'Devil', 'Time', 'Bird', 'Road', 'Mary', 'Sister', 'Evening', 'Candle', 'Light', 'City', 'Diamond', 'Chain', 'Body', 'California', 'Birthday', 'Ticket', 'Lover', 'House', 'World', 'Sue/Susan', 'Honey', 'Man', 'Moment', 'Liar', 'Life', 'Sign', 'Blues/Blue', 'Finger', 'Sky', 'Calendar', 'Rebel', 'Gun', 'Arms', 'Color', 'Rose', 'Girlfriend', 'Prayer', 'Boat', 'Car', 'Winter', 'Child', 'Thrill', 'Going', 'Book', 'Piece', 'Star', 'Money', 'Lips', 'Sun', 'Plane', 'Tomorrow', 'Way', 'L.A.',];
-  categories = ['Numbers Above 1000', 'Occupations', 'Christmas', 'Pets', 'Movement', 'Surfing', 'Names Of Months', 'The Color Red', 'Cities', 'Cars A-N', 'Money', 'Alcoholic Beverages', 'Nationalities', 'School', 'Boys\' Names T-Z', 'Boats', 'Girls\' Names H-N', 'The Beach', 'Disasters', 'Cars O-Z', 'Happiness', 'Girls\' Names T-Z', 'Bad Guys', 'Birds', 'Clothes Below The Waist', 'Clothes Above The Waist', 'Historical Figures', 'Opposites', 'Luck', 'Parties', 'The Sun', 'Numbers 11-20', 'America', 'Foreign Language', 'Girls\' Names A-G', 'Military/War', 'Fruit', 'Good Guys', 'Vegetables',];
-  verbs = ['Begin', 'Return', 'Can', 'Forget', 'End', 'Try', 'Look', 'Wait', 'Teach', 'Wake', 'Rock', 'Surf', 'Fall', 'Dance', 'Steal', 'Drive', 'Let', 'Sit', 'Sleep', 'Should/Could', 'Roll', 'Beat', 'Cheat', 'Whisper', 'Saw', 'Please', 'Can\'t', 'Shake', 'Travel', 'Die', 'Wish', 'Burn', 'Ride', 'Play', 'Keep', 'Send', 'Try', 'Can', 'Like', 'Bring', 'Got', 'Listen', 'Kill', 'Hear/Heard', 'Pray', 'Will', 'Make', 'Help', 'Have', 'See', 'May', 'Dream', 'Blow',];
-  prepositions = ['If', 'On', 'Oh', 'By', 'Because',];
-  adverbs = ['Suddenly', 'Once', 'Not', 'When', 'Apart', 'Forever', 'Sometimes', 'Again', 'Up', 'Down', 'There', 'So', 'Away', 'North', 'Near', 'Far', 'Nowhere', 'Since', 'No', 'Over', 'Yes',];
-  pronouns = ['Him', 'You', 'She', 'Nobody', 'This', 'They', 'That',];
+  adjectives = ['Poor', 'Mid', 'Tender', 'East/West', 'Late/Later', 'Lost', 'Strong', 'Great', 'Happy', 'Short', 'Young', 'Deep', 'Much', 'Blue', 'Yellow', 'Very', 'Small', 'High', 'Only', 'Cool', 'Cruel', 'Some', 'More', 'Crying', 'One', 'Pretty', 'Funny', 'Tall', 'Next', 'Above', 'Black', 'Purple', 'Across', 'Kind', 'White', 'In', 'Dark', 'Big', 'Two', 'Lonely', 'Without', 'Real', 'Blind', 'Long', 'New', 'Golden/Gold', 'Crazy', 'My', 'Old', 'Three', 'Easy', 'Sorry', 'Just', 'Every', 'Out', 'Dead', 'Last', 'Together', 'Free', 'Cold', 'Close', 'Still', 'Behind', 'South/Southern', 'Hot', 'Little', 'Fine', 'Red', 'Hard', 'Under', 'Back', 'Our', 'Green', 'Four', 'Around', 'Jungle', 'Foolish', 'Sad', 'With', 'Many', 'What', 'Jealous', 'Tight', 'Round', 'Anymore', 'Good', 'Bad', 'Mean', 'Strange/Stranger', 'Wild', 'Wise', 'Alone', 'Slow', 'Higher',];
+
+  nouns = ['Funk', 'Circle', 'Ocean', 'Afternoon', 'Summer', 'Music', 'Wine', 'War', 'Heaven', 'Mr/Mrs', 'Land', 'Piano', 'Heart', 'Papa/Daddy', 'Moon', 'Dream', 'Train', 'Shop', 'Door', 'Good-Bye', 'Thank You', 'Soul', 'Window', 'Saturday', 'Room', 'Radio', 'Skin', 'Don\'t', 'Mama/Mommy', 'Job', 'God', 'Fire', 'Son', 'Fool', 'Things', 'Christmas', 'Girl', 'Devil', 'Time', 'Bird', 'Road', 'Mary', 'Sister', 'Evening', 'Candle', 'Light', 'City', 'Diamond', 'Chain', 'Body', 'California', 'Birthday', 'Ticket', 'Lover/Love', 'House', 'World', 'Sue/Susan', 'Honey', 'Man', 'Moment', 'Liar', 'Life', 'Sign', 'Blues/Blue', 'Finger', 'Sky', 'Calendar', 'Rebel', 'Gun', 'Arms', 'Color', 'Rose', 'Girlfriend', 'Prayer', 'Boat', 'Car', 'Winter', 'Child', 'Thrill', 'Going', 'Book', 'Piece', 'Star', 'Money', 'Lips', 'Sun', 'Plane', 'Tomorrow', 'Way', 'L.A.', 'Sunshine', 'Stone', 'Darling', 'Word', 'Mouth', 'Hand', 'Glass', 'Secret', 'Luck', 'Taste', 'Game', 'Sea', 'Morning', 'People', 'Day', 'Wind', 'Rain', 'Earth', 'Family', 'Monday', 'Friday', 'Sunday', 'Tonight', 'River', 'Blood', 'Everything', 'Somebody', 'Cloud', 'Work', 'Party', 'June', 'Trouble', 'Sweetheart', 'Teenager', 'Grease', 'Flower', 'Today', 'Miles', 'New York City', 'Grass', 'Mountain', 'Father', 'Second', 'Angel', 'Night', 'Dog', 'Eye/Eyes', 'Boy', 'Pink', 'Home', 'Faith', 'Yesterday', 'Field', 'Toe', 'Magic', 'Bell', 'Water', 'Shame', 'Rhythm', 'Pain', 'Sand', 'reason', 'Street', 'Year', 'Brother', 'Kiss', 'Believe', 'Cat', 'Woman', 'Town', 'Baby', 'Mother', 'Power', 'Lady', 'Doll', 'Thunder/Lightning', 'Everyone/Everybody', 'Ain\'t', 'Sugar', 'Guitar', 'Photograph', 'Doctor', 'Chance', 'Wife', 'Show', 'Tear', 'Breath/Breathe', 'Fish/Kinds of Fish', 'Jungle', 'Guy', 'Queen', 'Boyfriend', 'Head', 'Tree', 'Highway', 'Place', 'Nothing', 'Track', 'Melody', 'Friend', 'Phone/Telephone', 'Week', 'Taxi', 'Hair', 'Sound', 'Hello', 'Step/Stair', 'Class', 'Beauty', 'King', 'Jack/John', 'Band', 'Memory',];
+ 
+  categories = ['Numbers Above 1000', 'Occupations', 'Christmas', 'Pets', 'Movement', 'Surfing', 'Names Of Months', 'The Color Red', 'Cities', 'Cars A-N', 'Money', 'Alcoholic Beverages', 'Nationalities', 'School', 'Boys\' Names T-Z', 'Boats', 'Girls\' Names H-N', 'The Beach', 'Disasters', 'Cars O-Z', 'Happiness', 'Girls\' Names T-Z', 'Bad Guys', 'Birds', 'Clothes Below The Waist', 'Clothes Above The Waist', 'Historical Figures', 'Opposites', 'Luck', 'Parties', 'The Sun', 'Numbers 11-20', 'America', 'Foreign Language', 'Girls\' Names A-G', 'Military/War', 'Fruit', 'Good Guys', 'Vegetables', 'Numbers Above 100', 'Counties', 'Planes/Trains', 'Celestial', 'Zoo Animals', 'Names of States', 'Nonsense', 'Size', 'Weddings', 'Famous People', 'Camp', 'Sports', 'Devils/Angels', 'Breaking Up', 'Geographic Features', 'Space', 'Numbers 1-10', 'Boys\' Names A-G', 'Boys\' Names O-S', 'Shoes', 'Girls\' Names O-S', 'Mail', 'Dreams', 'Numbers 50-100', 'Holidays Other Than Christmas', 'Games', 'Farm Animals', 'Seasons', 'Numbers 21-50', 'Time', 'Body Parts', 'One-Word Titles', 'Traveling', 'Food', 'Times of Day', 'Household Items', 'Person\'s Name in Title', 'Jewels', 'Monsters', 'Boys\' Names H-N', 'Plants', 'Musical Instruments in Title', 'Question in Title', 'Insects', 'Show Tunes', 'Weather', 'Dances', 'The Country', 'Relatives', 'Dying', 'Biblical References', 'Towns', 'Movies', 'Groove', 'Work', 'Parties', 'Chidren\'s Songs', 'Spelling', 'Rock and Roll', 'Going Away', 'Jails/Prison',];
+  
+ verbs = ['Begin', 'Return', 'Can', 'Forget', 'End', 'Try', 'Look', 'Wait', 'Teach', 'Wake', 'Rock', 'Surf', 'Fall', 'Dance', 'Steal', 'Drive', 'Let', 'Sit', 'Sleep', 'Should/Could', 'Roll', 'Beat', 'Cheat', 'Whisper', 'Saw', 'Please', 'Can\'t', 'Shake', 'Travel', 'Die', 'Wish', 'Burn', 'Ride', 'Play', 'Keep', 'Send', 'Like', 'Bring', 'Got', 'Listen', 'Kill', 'Hear/Heard', 'Pray', 'Will', 'Make', 'Help', 'Have', 'See', 'May', 'Dream', 'Blow', 'Know/Knew', 'Touch', 'Care', 'Fight', 'Smile', 'Hold', 'Write', 'Search', 'Catch', 'Wave', 'Put', 'Change', 'Go', 'Pull', 'Sing', 'Broke', 'Tell', 'Live', 'Find', 'Fly', 'Promise', 'Say', 'Miss', 'Ring', 'Turn', 'Rise', 'Climb', 'Feel', 'Come', 'Take', 'Walk', 'Said',  'Think', 'Want', 'Shout', 'Bless', 'Does', 'Call', 'Run', 'Marry', 'Understand', 'Laugh', 'Watch', 'Hug', 'Eat', 'Knock', 'Leave', 'Grow', 'Stop', 'Sweet', 'Need', 'Sail', 'Stay', 'Move', 'Drink', 'Stand', 'Release', 'Shot/Shoot', 'Give', 'Get', 'Talk',];
+ 
+  prepositions = ['If', 'On', 'Oh', 'By', 'Because', 'From', 'Until',];
+ 
+  adverbs = ['Suddenly', 'Once', 'Not', 'When', 'Apart', 'Forever', 'Sometimes', 'Again', 'Up', 'Down', 'There', 'So', 'Away', 'North', 'Near', 'Far', 'Nowhere', 'Since', 'No', 'Over', 'Yes', 'Never', 'Too', 'Where', 'Here', 'How',];
+ 
+  pronouns = ['Him', 'You', 'She', 'Nobody', 'This', 'They', 'That', 'Who', 'He', 'Her', 'Me', 'Yours',];
+ 
 
   cardRules = {
     lyrics: { title: 'Song Lyrics', nocat: 'Sing a song with lyrics containing the word...', cat: 'Sing a song pertaining to...', 'class': 'song' },
