@@ -13,9 +13,10 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-slides #slides pager="false">
-    <ion-slide>
-      <app-game-card [hide]="hide" [card]="card" [rule]="rule"></app-game-card>
+  <ion-slides #slides pager="false" (ionSlideDidChange)="onSlideChanged()" (ionSlideTransitionStart)="hide=true"
+    (ionSlideTransitionEnd)="hide=false">
+    <ion-slide *ngFor="let card of cards">
+      <app-game-card [card]="card"></app-game-card>
     </ion-slide>
   </ion-slides>
 
@@ -28,7 +29,7 @@
   </ion-fab>
 
   <ion-fab vertical="bottom" horizontal="end" slot="fixed">
-    <ion-fab-button [disabled]="hide" (click)="getNextCard()" color="light">
+    <ion-fab-button [disabled]="hide" (click)="drawCard()" color="light">
       <ion-icon name="return-right"></ion-icon>
     </ion-fab-button>
   </ion-fab>

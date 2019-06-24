@@ -9,7 +9,6 @@ import { GameCard } from '../game-card';
 export class GameCardComponent implements OnInit {
   @Input() hide: boolean;
   @Input() card: GameCard;
-  @Input() rule: string;
   @Output() nextCard;
 
   constructor() { }

@@ -22,6 +22,7 @@ const routes: Routes = [
     path: 'instructions',
     loadChildren: './instructions/instructions.module#InstructionsPageModule'
   },
+  { path: 'game-over', loadChildren: './game-over/game-over.module#GameOverPageModule' },
 ];
 
 @NgModule({
