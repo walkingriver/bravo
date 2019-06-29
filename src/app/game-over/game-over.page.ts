@@ -14,7 +14,8 @@ export class GameOverPage implements OnInit {
     private gameStorage: GameStorageService
   ) { }
 
-  ngOnInit() {
-    return this.gameStorage.markGameInProgress(false);
+  async ngOnInit() {
+    this.data = await this.gameStorage.loadGame();
+    await this.gameStorage.markGameInProgress(false);
   }
 }
