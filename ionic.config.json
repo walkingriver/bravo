@@ -1,5 +1,7 @@
 {
   "name": "Bravo",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }
