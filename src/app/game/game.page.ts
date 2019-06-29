@@ -5,7 +5,6 @@ import { Subscription, Subject, timer } from 'rxjs';
 import { switchMap, tap, filter } from 'rxjs/operators';
 import { GameCard } from '../game-card';
 import { AlertController, IonSlides } from '@ionic/angular';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-game',
@@ -21,6 +20,7 @@ export class GamePage implements OnInit, OnDestroy {
   allCards = {};
   timerMax = 60;
   cardsPerGame = 100;
+  hasTimer = true;
 
   timeRemaining = this.timerMax;
   sub: Subscription;
@@ -30,7 +30,6 @@ export class GamePage implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private alertCtrl: AlertController,
     private gameStorage: GameStorageService,
     private router: Router
   ) { }
@@ -43,18 +42,24 @@ export class GamePage implements OnInit, OnDestroy {
     this.sub = this.cardDrawn$.pipe(
       tap({ next: () => { this.timeRemaining = this.timerMax; } }),
       switchMap(() => timer(250, 1000)),
-      tap({ next: () => { this.timeRemaining--; } }),
+      tap({ next: () => { if (this.hasTimer) {this.timeRemaining--;} } }),
       filter(() => this.timeRemaining < 0)
     ).subscribe({ next: () => this.drawCard() });
-
+    
     const data = await this.gameStorage.loadGame();
+    this.gameStorage.markGameInProgress(true);
     this.score = data.score;
 
-    // Set up 100 cards for a single game
+    // Set up n cards for a single game
+    this.cardsPerGame = data.maxCards || 100;
     for (let i = 0; i < this.cardsPerGame; i++) {
       this.getNextCard();
     }
-
+    
+    // 
+    this.timerMax = data.maxTimer || 60;
+    this.hasTimer = data.hasTimer;
+    
     // This will start the timer
     this.cardDrawn$.next();
   }
@@ -95,32 +100,6 @@ export class GamePage implements OnInit, OnDestroy {
     } else {
       return 'danger';
     }
-  }
-
-
-  async newGame() {
-    const alert = await this.alertCtrl.create({
-      header: 'Start a new game?',
-      message: 'Reset the scores and start a brand new game?',
-      buttons: [
-        {
-          text: 'Nevermind',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'New Game',
-          handler: async () => {
-            const data = await this.gameStorage.newGame(); // calls and returns loadGame 
-            this.score = data.score;
-            this.drawCard();
-          }
-        }
-      ]
-    });
-    return await alert.present();
   }
 
   getNextCard() {

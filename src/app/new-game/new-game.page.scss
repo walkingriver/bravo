@@ -1,11 +1,12 @@
-
 ion-content {
   --ion-background-color: transparent;
   background-image: url('/assets/images/choir.jpg');
   background-size: cover !important;
   background-position: center;
+  opacity: 50%;
 }
 
 ion-card {
   background-color: white;
 }
+

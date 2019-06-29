@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>Bravo! (New Game)</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <div class="concert bg"></div>
+    <ion-card-header class="item item-header item-text-wrap">
+      <ion-card-title>Select Game Options</ion-card-title>
+    </ion-card-header>
+    <ion-card-content class="item item-body">
+      <ion-list>
+        <ion-item>
+          <ion-label>Cards</ion-label>
+          <ion-select [(ngModel)]="data.maxCards" [selectedText]="data.maxCards">
+            <ion-select-option value="10">10</ion-select-option>
+            <ion-select-option value="25">25</ion-select-option>
+            <ion-select-option value="50">50</ion-select-option>
+            <ion-select-option value="75">75</ion-select-option>
+            <ion-select-option value="100">100</ion-select-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label>Show timer</ion-label>
+          <ion-toggle [(ngModel)]="data.hasTimer"></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-label>Seconds</ion-label>
+          <ion-select [disabled]="!data.hasTimer" [(ngModel)]="data.maxTimer" [selectedText]="data.maxTimer">
+            <ion-select-option value="30">30</ion-select-option>
+            <ion-select-option value="60">60</ion-select-option>
+            <ion-select-option value="90">90</ion-select-option>
+            <ion-select-option value="120">120</ion-select-option>
+            <ion-select-option value="180">180</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+      <ion-toolbar>
+        <ion-button expand="block" routerLink="/game" routerDirection="forward">
+          New Game
+        </ion-button>
+      </ion-toolbar>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

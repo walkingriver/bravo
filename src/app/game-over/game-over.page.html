@@ -1,9 +1,63 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-title>GameOver</ion-title>
+  <ion-toolbar color="dark">
+    <ion-title>Bravo!</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
+
+  <ion-card>
+    <div class="concert bg"></div>
+    <ion-card-header>
+      <ion-card-title>Game Over</ion-card-title>
+      <ion-card-subtitle>Final Results</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+
+      <p>Below are the final scores. What a game it was!</p>
+      <p>To the winner: Take a moment to gloat, trash talk, and laugh at your lesser opponents.</p>
+      <p>To the losers: As soon as you go home, make sure you study up on your TV, Movie, Book, and Song knowledge. This
+        is surely one of the worst embarrassments of your life to this point, and you should be ashamed of your failure.
+      </p>
+
+      <p><em>Not really. This is only a silly game, not to be taken seriously.
+        </em></p>
+
+      <ion-grid>
+        <ion-row>
+          <ion-col size="4">
+            <ion-button expand="block" fill="clear" class="blue-bg score">{{data?.score[0]}}
+            </ion-button>
+          </ion-col>
+          <ion-col size="4">
+            <ion-button expand="block" fill="clear" class="red-bg score">{{data?.score[1]}}
+            </ion-button>
+          </ion-col>
+          <ion-col size="4">
+            <ion-button expand="block" fill="clear" class="green-bg score">{{data?.score[2]}}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="4">
+            <ion-button expand="block" fill="clear" class="yellow-bg score">{{data?.score[3]}}
+            </ion-button>
+          </ion-col>
+          <ion-col size="4">
+            <ion-button expand="block" fill="clear" class="pink-bg score">{{data?.score[4]}}
+            </ion-button>
+          </ion-col>
+          <ion-col size="4">
+            <ion-button expand="block" fill="clear" class="brown-bg score">{{data?.score[5]}}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <ion-button expand="block" color="success" routerDirection="root" routerLink="/new-game">New Game</ion-button>
+      <ion-button expand="block" fill="clear" routerDirection="root" routerLink="/home">Home</ion-button>
+
+    </ion-card-content>
+  </ion-card>
 
 </ion-content>

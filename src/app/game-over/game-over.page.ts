@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GameStorageService } from '../game-storage.service';
+import { GameData } from '../game-data';
 
 @Component({
   selector: 'app-game-over',
@@ -6,10 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./game-over.page.scss'],
 })
 export class GameOverPage implements OnInit {
+  data: GameData;
 
-  constructor() { }
+  constructor(
+    private gameStorage: GameStorageService
+  ) { }
 
   ngOnInit() {
+    return this.gameStorage.markGameInProgress(false);
   }
-
 }

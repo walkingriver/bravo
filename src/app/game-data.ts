@@ -4,5 +4,12 @@ export interface GameData {
   score: number[];
   card: GameCard;
   timeRemaining?: number;
-  hasSeenInstructions?: boolean
+  hasTimer?: boolean;
+  maxCards?: number;
+  maxTimer?: number;
+}
+
+export interface AppData {
+  hasSeenInstructions?: boolean;
+  isInProgress?: boolean;
 }
