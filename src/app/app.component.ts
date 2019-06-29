@@ -18,19 +18,14 @@ export class AppComponent implements OnInit {
       icon: 'home'
     },
     {
-      title: 'Play Game',
-      url: '/game',
+      title: 'New Game',
+      url: '/new-game',
       icon: 'mic'
     },
     {
       title: 'Instructions',
       url: '/instructions',
       icon: 'paper'
-    },
-    {
-      title: 'New Game',
-      url: '/new-game',
-      icon: 'mic'
     }
   ];
 

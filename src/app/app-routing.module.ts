@@ -21,6 +21,10 @@ const routes: Routes = [
     loadChildren: './game/game.module#GamePageModule'
   },
   {
+    path: 'game-start',
+    loadChildren: './game/game.module#GamePageModule'
+  },
+  {
     path: 'instructions',
     loadChildren: './instructions/instructions.module#InstructionsPageModule'
   },
