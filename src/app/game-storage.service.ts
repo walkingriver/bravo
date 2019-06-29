@@ -67,7 +67,7 @@ export class GameStorageService {
     this.saveAppData(data);
   }
 
-  async newGame(): Promise<any> {
+  async newGame(): Promise<GameData> {
     try {
       const data = await this.loadGame();
       await this.saveGame(emptyData);
@@ -81,7 +81,7 @@ export class GameStorageService {
 
 const emptyData: GameData = {
   score: [0, 0, 0, 0, 0, 0],
-  card: { class: '', rule: '', text: '', title: '' },
+  card: null,
   hasTimer: true,
   maxCards: 100,
   maxTimer: 60,

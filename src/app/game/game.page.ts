@@ -25,6 +25,7 @@ export class GamePage implements OnInit, OnDestroy {
   timeRemaining = this.timerMax;
   sub: Subscription;
   hide = false;
+  currentCardIndex = 0;
 
   private cardDrawn$ = new Subject();
 
@@ -42,30 +43,35 @@ export class GamePage implements OnInit, OnDestroy {
     this.sub = this.cardDrawn$.pipe(
       tap({ next: () => { this.timeRemaining = this.timerMax; } }),
       switchMap(() => timer(250, 1000)),
-      tap({ next: () => { if (this.hasTimer) {this.timeRemaining--;} } }),
+      tap({ next: () => { if (this.hasTimer) { this.timeRemaining--; } } }),
       filter(() => this.timeRemaining < 0)
     ).subscribe({ next: () => this.drawCard() });
-    
+
     const data = await this.gameStorage.loadGame();
     this.gameStorage.markGameInProgress(true);
     this.score = data.score;
 
+    if (data.card) {
+      this.cards.push(data.card);
+      this.currentCardIndex = data.card.index + 1;
+    }
+
     // Set up n cards for a single game
     this.cardsPerGame = data.maxCards || 100;
-    for (let i = 0; i < this.cardsPerGame; i++) {
-      this.getNextCard();
+    for (let i = this.currentCardIndex; i < this.cardsPerGame; i++) {
+      this.getNextCard(i);
     }
-    
+
     // 
     this.timerMax = data.maxTimer || 60;
     this.hasTimer = data.hasTimer;
-    
+
     // This will start the timer
     this.cardDrawn$.next();
   }
 
   async ngOnDestroy() {
-    await this.gameStorage.saveGame({ score: this.score, card: this.cards[0], timeRemaining: this.timeRemaining });
+    await this.saveGame();
     this.sub.unsubscribe();
   }
 
@@ -73,7 +79,18 @@ export class GamePage implements OnInit, OnDestroy {
     this.score[team]++;
     this.timeRemaining += 15;
     if (this.timeRemaining > 999) { this.timeRemaining = 999; }
-    this.gameStorage.saveGame({ score: this.score, card: this.cards[0], timeRemaining: this.timeRemaining });
+    this.saveGame();
+  }
+
+  private saveGame() {
+    return this.gameStorage.saveGame({
+      score: this.score,
+      hasTimer: this.hasTimer,
+      maxCards: this.cardsPerGame,
+      maxTimer: this.timerMax,
+      card: this.cards[this.currentCardIndex],
+      timeRemaining: this.timeRemaining
+    });
   }
 
   resetCards() {
@@ -102,11 +119,11 @@ export class GamePage implements OnInit, OnDestroy {
     }
   }
 
-  getNextCard() {
+  getNextCard(cardIndex: number) {
     const list = this.randomList(this.allCards);
     const text = list.words[list.index++];
     const currentRule = this.randomList(this.cardRules);
-    const card: GameCard = { class: '', rule: '', text: '', title: '' };
+    const card: GameCard = { class: '', rule: '', text: '', title: '', index: cardIndex };
     card.class = currentRule.class;
     card.title = currentRule.title;
     if (text) {
@@ -114,7 +131,7 @@ export class GamePage implements OnInit, OnDestroy {
     } else {
       list.index = 0;
       list.words = list.words.sort(this.shuffle);
-      this.getNextCard();
+      this.getNextCard(cardIndex);
     }
     if (list.ruleKey === 'cat') {
       card.rule = currentRule.cat;
@@ -127,7 +144,9 @@ export class GamePage implements OnInit, OnDestroy {
   }
 
   /** When a slide event occurs, reset the timer. */
-  onSlideChanged() {
+  async onSlideChanged() {
+    this.currentCardIndex++;
+    await this.saveGame()
     this.cardDrawn$.next();
   }
 

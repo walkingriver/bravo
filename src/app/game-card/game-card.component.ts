@@ -7,9 +7,8 @@ import { GameCard } from '../game-card';
   styleUrls: ['./game-card.component.scss'],
 })
 export class GameCardComponent implements OnInit {
-  @Input() hide: boolean;
+  @Input() maxCards: number;
   @Input() card: GameCard;
-  @Output() nextCard;
 
   constructor() { }
 

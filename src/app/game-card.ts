@@ -3,5 +3,6 @@ export interface GameCard {
   rule: string;
   text: string;
   title: string;
+  index: number;
 };
 

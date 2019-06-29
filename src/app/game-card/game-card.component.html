@@ -12,5 +12,10 @@
     <div class="item-text-wrap item text-center">
       <p>{{card.rule}} "{{card.text}}"</p>
     </div>
+    <ion-toolbar>
+      <ion-buttons slot="end">
+        ({{card?.index + 1}}<span *ngIf="maxCards">&nbsp;of {{maxCards}}</span>)
+      </ion-buttons>
+    </ion-toolbar>
   </ion-card-content>
 </ion-card>

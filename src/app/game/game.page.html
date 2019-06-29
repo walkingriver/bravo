@@ -11,7 +11,7 @@
   <ion-slides #slides pager="false" (ionSlideDidChange)="onSlideChanged()" (ionSlideTransitionStart)="hide=true"
     (ionSlideTransitionEnd)="hide=false">
     <ion-slide *ngFor="let card of cards">
-      <app-game-card [card]="card"></app-game-card>
+      <app-game-card [card]="card" [maxCards]="cardsPerGame"></app-game-card>
     </ion-slide>
   </ion-slides>
 

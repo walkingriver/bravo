@@ -8,20 +8,20 @@ import { GameData } from '../game-data';
   templateUrl: './new-game.page.html',
   styleUrls: ['./new-game.page.scss'],
 })
-export class NewGamePage implements OnInit, OnDestroy {
-  data: GameData;
+export class NewGamePage implements OnInit {
+  data: {};
 
   constructor(
     private gameStorage: GameStorageService,
     private router: Router) { }
 
   async ngOnInit() {
+    this.data= await this.gameStorage.newGame();
     await this.gameStorage.markGameInProgress(false);
-    const data: GameData = await this.gameStorage.newGame();
-    this.data = data;
   }
 
-  async ngOnDestroy() {
-    await this.gameStorage.saveGame(this.data);
+  async startNewGame() {
+    await this.gameStorage.saveGame(<GameData>this.data);
+    this.router.navigateByUrl('/game-start');
   }
 }
