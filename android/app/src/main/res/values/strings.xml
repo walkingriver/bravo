@@ -1,0 +1,8 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">bravo</string>
+    <string name="title_activity_main">bravo</string>
+    <string name="package_name">com.walkingriver.bravo</string>
+    <string name="fileprovider_authority">com.walkingriver.bravo.fileprovider</string>
+    <string name="custom_url_scheme">com.walkingriver.bravo</string>
+</resources>
