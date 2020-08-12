@@ -50,7 +50,7 @@ export class GameStorageService {
       console.error(e); 0
     }
   }
-  
+
   async markSeenInstructions(): Promise<AppData> {
     try {
       const data = await this.loadAppData();
@@ -79,9 +79,16 @@ export class GameStorageService {
   }
 }
 
-const emptyData: GameData = {
+export const emptyData: GameData = {
   score: [0, 0, 0, 0, 0, 0],
   card: null,
+  categories: [
+    'lyrics',
+    'bookTitle',
+    'movieTitle',
+    'songTitle',
+    'movieQuote'
+  ],
   hasTimer: true,
   maxCards: 100,
   maxTimer: 60,

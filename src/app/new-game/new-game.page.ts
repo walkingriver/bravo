@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { GameStorageService } from '../game-storage.service';
+import { GameStorageService, emptyData } from '../game-storage.service';
 import { Router } from '@angular/router';
 import { GameData } from '../game-data';
 
@@ -9,7 +9,7 @@ import { GameData } from '../game-data';
   styleUrls: ['./new-game.page.scss'],
 })
 export class NewGamePage implements OnInit {
-  data: {};
+  data:GameData = emptyData;
 
   constructor(
     private gameStorage: GameStorageService,

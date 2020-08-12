@@ -1,12 +1,12 @@
 <ion-header>
   <ion-toolbar color="dark">
-    <ion-title>Bravo!</ion-title>
+    <ion-title>New Game</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
   <ion-card>
-    <div class="concert bg"></div>
+    <!-- <div class="concert bg"></div> -->
     <ion-card-header class="item item-header item-text-wrap">
       <ion-card-title>Select Game Options</ion-card-title>
     </ion-card-header>
@@ -22,6 +22,17 @@
             <ion-select-option value="100">100</ion-select-option>
           </ion-select>
         </ion-item>
+        <ion-item>
+          <ion-label>Categories</ion-label>
+          <ion-select multiple [(ngModel)]="data.categories">
+            <ion-select-option value="lyrics">Song Lyrics</ion-select-option>
+            <ion-select-option value="bookTitle">Book Titles</ion-select-option>
+            <ion-select-option value="movieTitle">Movie/TV Titles</ion-select-option>
+            <ion-select-option value="songTitle">Song Titles</ion-select-option>
+            <ion-select-option value="movieQuote">Movie/TV Quotes</ion-select-option>
+          </ion-select>
+        </ion-item>
+        
         <ion-item>
           <ion-label>Show timer</ion-label>
           <ion-toggle [(ngModel)]="data.hasTimer"></ion-toggle>
@@ -44,4 +55,5 @@
       </ion-toolbar>
     </ion-card-content>
   </ion-card>
+
 </ion-content>

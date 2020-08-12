@@ -16,6 +16,7 @@ export class GamePage implements OnInit, OnDestroy {
 
   cards: GameCard[] = [];
   score: number[] = [0, 0, 0, 0, 0, 0];
+  selectedCategories: string[] = [];
   rules = [''];
   allCards = {};
   timerMax = 60;
@@ -50,6 +51,7 @@ export class GamePage implements OnInit, OnDestroy {
     const data = await this.gameStorage.loadGame();
     this.gameStorage.markGameInProgress(true);
     this.score = data.score;
+    this.selectedCategories = data.categories || [];
 
     if (data.card) {
       this.cards.push(data.card);
@@ -122,7 +124,8 @@ export class GamePage implements OnInit, OnDestroy {
   getNextCard(cardIndex: number) {
     const list = this.randomList(this.allCards);
     const text = list.words[list.index++];
-    const currentRule = this.randomList(this.cardRules);
+    const currentRule = this.randomRule(this.cardRules);
+    console.log('rule: ', currentRule);
     const card: GameCard = { class: '', rule: '', text: '', title: '', index: cardIndex };
     card.class = currentRule.class;
     card.title = currentRule.title;
@@ -163,6 +166,15 @@ export class GamePage implements OnInit, OnDestroy {
   randomList(obj) {
     const keys = Object.keys(obj)
     return obj[keys[keys.length * Math.random() << 0]];
+  }
+  
+  randomRule(obj) {
+    if (this.selectedCategories.length) {
+      const keys = this.selectedCategories;
+      return obj[keys[keys.length * Math.random() << 0]];
+    } else {
+      return this.randomList(obj);
+    }
   }
 
   adjectives = ['Poor', 'Mid', 'Tender', 'East/West', 'Late/Later', 'Lost', 'Strong', 'Great', 'Happy', 'Short', 'Young', 'Deep', 'Much', 'Blue', 'Yellow', 'Very', 'Small', 'High', 'Only', 'Cool', 'Cruel', 'Some', 'More', 'Crying', 'One', 'Pretty', 'Funny', 'Tall', 'Next', 'Above', 'Black', 'Purple', 'Across', 'Kind', 'White', 'In', 'Dark', 'Big', 'Two', 'Lonely', 'Without', 'Real', 'Blind', 'Long', 'New', 'Golden/Gold', 'Crazy', 'My', 'Old', 'Three', 'Easy', 'Sorry', 'Just', 'Every', 'Out', 'Dead', 'Last', 'Together', 'Free', 'Cold', 'Close', 'Still', 'Behind', 'South/Southern', 'Hot', 'Little', 'Fine', 'Red', 'Hard', 'Under', 'Back', 'Our', 'Green', 'Four', 'Around', 'Jungle', 'Foolish', 'Sad', 'With', 'Many', 'What', 'Jealous', 'Tight', 'Round', 'Anymore', 'Good', 'Bad', 'Mean', 'Strange/Stranger', 'Wild', 'Wise', 'Alone', 'Slow', 'Higher',];
