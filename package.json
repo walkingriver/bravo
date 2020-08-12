@@ -1,8 +1,10 @@
 {
-  "name": "Bravo",
-  "version": "19.06.30",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "name": "bravo",
+  "displayName": "Bravo!",
+  "version": "20.08.15",
+  "author": "Michael D. Callaghan",
+  "homepage": "https://walkingriver.com/",
+  "description": "An On-the-Go Party Game!",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -61,6 +63,5 @@
     "ts-node": "~8.2.0",
     "tslint": "~5.17.0",
     "typescript": "~3.1.6"
-  },
-  "description": "An Ionic project"
+  }
 }
