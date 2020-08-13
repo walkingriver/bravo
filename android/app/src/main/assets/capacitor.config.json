@@ -1,7 +1,8 @@
 {
   "appId": "com.walkingriver.bravo",
-  "appName": "bravo",
+  "appName": "Bravo",
   "bundledWebRuntime": false,
   "npmClient": "npm",
-  "webDir": "www"
+  "webDir": "www",
+  "cordova": {}
 }
