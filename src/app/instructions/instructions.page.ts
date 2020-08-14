@@ -20,7 +20,6 @@ export class InstructionsPage implements OnInit, OnDestroy {
 
   constructor(private gameStorage: GameStorageService,
     public menu: MenuController) {
-
   }
 
   async ngOnInit() {
@@ -28,9 +27,7 @@ export class InstructionsPage implements OnInit, OnDestroy {
     this.slider.options = { autoHeight: true };
     this.menu.enable(false);
 
-    const data = await this.gameStorage.loadGame();
-    data.hasSeenInstructions = true;
-    await this.gameStorage.saveGame(data);
+    this.gameStorage.markSeenInstructions();
   }
 
   ngOnDestroy() {

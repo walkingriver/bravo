@@ -1,10 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
-import { Platform, AlertController, NavController } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { StatusBar } from '@ionic-native/status-bar/ngx';
-import { GameStorageService } from './game-storage.service';
-import { Router } from '@angular/router';
+import { Platform } from '@ionic/angular';
+import { Plugins } from '@capacitor/core';
+const { SplashScreen, StatusBar } = Plugins;
 
 @Component({
   selector: 'app-root',
@@ -18,8 +16,8 @@ export class AppComponent implements OnInit {
       icon: 'home'
     },
     {
-      title: 'Play Game',
-      url: '/game',
+      title: 'New Game',
+      url: '/new-game',
       icon: 'mic'
     },
     {
@@ -30,19 +28,15 @@ export class AppComponent implements OnInit {
   ];
 
   constructor(
-    private platform: Platform,
-    private router: Router,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar
-
+    private platform: Platform
   ) {
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      // StatusBar.styleDefault();
+      SplashScreen.hide();
     });
   }
 

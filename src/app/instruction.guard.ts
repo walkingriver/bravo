@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { GameStorageService } from './game-storage.service';
 
 @Injectable({
@@ -11,15 +10,15 @@ export class InstructionGuard implements CanActivate {
     private gameStorage: GameStorageService,
     private router: Router) { }
 
-   canActivate(
+  canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Promise<boolean> {
     return this.checkInstructions();
   }
 
   async checkInstructions(): Promise<boolean> {
-    const data = await this.gameStorage.loadGame();
-    if (data.hasSeenInstructions) {
+    const hasSeenInstructions = await this.gameStorage.hasSeenInstructions();
+    if (hasSeenInstructions) {
       return true;
     } else {
       this.router.navigate(['/instructions'])

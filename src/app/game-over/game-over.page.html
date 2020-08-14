@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Bravo!</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card>
+    <div class="concert bg"></div>
+    <ion-card-header>
+      <ion-card-title>Game Over</ion-card-title>
+      <ion-card-subtitle>Here are the final scores. What a game it was!</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col size="2">
+            <div class="blue-bg score ion-text-center">{{data?.score[0]}}</div>
+          </ion-col>
+          <ion-col size="2">
+            <div class="red-bg score ion-text-center">{{data?.score[1]}}</div>
+          </ion-col>
+          <ion-col size="2">
+            <div class="green-bg score ion-text-center">{{data?.score[2]}}</div>
+          </ion-col>
+          <ion-col size="2">
+            <div class="yellow-bg score ion-text-center">{{data?.score[3]}}</div>
+          </ion-col>
+          <ion-col size="2">
+            <div class="pink-bg score ion-text-center">{{data?.score[4]}}</div>
+          </ion-col>
+          <ion-col size="2">
+            <div class="brown-bg score ion-text-center">{{data?.score[5]}}</div>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <p>To the winner: Take a moment to gloat, trash talk, and laugh at your lesser opponents.</p>
+      <p>To the losers: As soon as you go home, make sure you study up on your TV, Movie, Book, and Song knowledge. This
+        is surely one of the worst embarrassments of your life to this point, and you should be ashamed of your failure.
+      </p>
+
+      <p><em>Not really. This is only a silly game, not to be taken seriously.
+        </em></p>
+
+
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>
