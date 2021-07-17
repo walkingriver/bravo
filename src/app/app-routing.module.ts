@@ -12,24 +12,24 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: './home/home.module#HomePageModule',
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
     canActivate: [InstructionGuard],
   },
   {
     path: 'game',
     canActivate: [InstructionGuard, InProgressGuard],
-    loadChildren: './game/game.module#GamePageModule'
+    loadChildren: () => import('./game/game.module').then(m => m.GamePageModule)
   },
   {
     path: 'game-start',
-    loadChildren: './game/game.module#GamePageModule'
+    loadChildren: () => import('./game/game.module').then(m => m.GamePageModule)
   },
   {
     path: 'instructions',
-    loadChildren: './instructions/instructions.module#InstructionsPageModule'
+    loadChildren: () => import('./instructions/instructions.module').then(m => m.InstructionsPageModule)
   },
-  { path: 'game-over', loadChildren: './game-over/game-over.module#GameOverPageModule' },
-  { path: 'new-game', loadChildren: './new-game/new-game.module#NewGamePageModule', canActivate: [NewGameGuard] },
+  { path: 'game-over', loadChildren: () => import('./game-over/game-over.module').then(m => m.GameOverPageModule) },
+  { path: 'new-game', loadChildren: () => import('./new-game/new-game.module').then(m => m.NewGamePageModule), canActivate: [NewGameGuard] },
 ];
 
 @NgModule({
