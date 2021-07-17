@@ -14,7 +14,7 @@ export interface Slide {
   styleUrls: ['./instructions.page.scss'],
 })
 export class InstructionsPage implements OnInit, OnDestroy {
-  @ViewChild('slider') slider: IonSlides;
+  @ViewChild('slider', { static: true }) slider: IonSlides;
   slides: Slide[];
   showSkip = true;
 
