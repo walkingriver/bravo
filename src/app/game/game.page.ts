@@ -12,7 +12,7 @@ import { AlertController, IonSlides } from '@ionic/angular';
   styleUrls: ['./game.page.scss'],
 })
 export class GamePage implements OnInit, OnDestroy {
-  @ViewChild('slides') slider: IonSlides;
+  @ViewChild('slides', { static: true }) slider: IonSlides;
 
   cards: GameCard[] = [];
   score: number[] = [0, 0, 0, 0, 0, 0];

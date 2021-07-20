@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
     {
       title: 'Instructions',
       url: '/instructions',
-      icon: 'paper'
+      icon: 'newspaper'
     }
   ];
 
